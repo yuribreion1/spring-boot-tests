@@ -45,6 +45,13 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(modelMapper.map(userDTO, User.class));
     }
 
+    @Override
+    public User delete(Integer id) {
+        User user = findById(id);
+        userRepository.delete(user);
+        return user;
+    }
+
     private boolean findByEmail(UserDTO userDTO) {
         if (userRepository.findByEmail(userDTO.getEmail()).isPresent() && !userDTO.getId().equals(userDTO.getId())) {
             throw new DataIntegrityViolationException("User already exists");

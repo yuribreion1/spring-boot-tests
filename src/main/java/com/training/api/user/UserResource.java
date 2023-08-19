@@ -54,4 +54,9 @@ public class UserResource {
             return ResponseEntity.ok(modelMapper.map(userService.update(userDTO), UserDTO.class));
     }
 
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<UserDTO> delete(@PathVariable Integer id) {
+        return ResponseEntity.ok(modelMapper.map(userService.delete(id), UserDTO.class));
+    }
+
 }
