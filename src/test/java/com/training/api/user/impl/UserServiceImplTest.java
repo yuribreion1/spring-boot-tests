@@ -13,9 +13,11 @@ import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
@@ -75,7 +77,15 @@ class UserServiceImplTest {
     }
 
     @Test
-    void findAll() {
+    @DisplayName("Testing findAll method")
+    void whenFindAllThenReturnAList() {
+        when(userRepository.findAll()).thenReturn(List.of(user));
+        List<User> userList = userService.findAll();
+
+        assertNotNull(userList);
+        assertEquals(1, userList.size());
+        assertEquals(User.class, userList.get(0).getClass());
+        assertEquals(ID, userList.get(0).getId());
     }
 
     @Test
