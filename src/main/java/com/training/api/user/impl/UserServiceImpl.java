@@ -41,11 +41,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(UserDTO userDTO) {
+        findByEmail(userDTO);
         return userRepository.save(modelMapper.map(userDTO, User.class));
     }
 
     private boolean findByEmail(UserDTO userDTO) {
-        if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
+        if (userRepository.findByEmail(userDTO.getEmail()).isPresent() && !userDTO.getId().equals(userDTO.getId())) {
             throw new DataIntegrityViolationException("User already exists");
         } else return true;
     }

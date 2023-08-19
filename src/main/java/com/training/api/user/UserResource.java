@@ -36,7 +36,6 @@ public class UserResource {
     @PostMapping
     public ResponseEntity<UserDTO> create(@RequestBody UserDTO userDTO) {
         User user = userService.create(userDTO);
-        UserDTO responseDTO = new UserDTO();
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -49,5 +48,10 @@ public class UserResource {
                 .build());
     }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<UserDTO> update(@PathVariable Integer id, @RequestBody UserDTO userDTO) {
+            userDTO.setId(id);
+            return ResponseEntity.ok(modelMapper.map(userService.update(userDTO), UserDTO.class));
+    }
 
 }
